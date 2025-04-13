@@ -69,23 +69,29 @@ public class Wordle {
         Map<Integer,Status> result=new HashMap<Integer,Status>();
         Map<Character,Integer> lettersCount=new HashMap<Character,Integer>();
 
-        // First loop to mark GREEN values
+        //First loop to get the count of letters
+        for (char c : chosenWord.toCharArray()) {
+            lettersCount.put(c, lettersCount.getOrDefault(c, 0) + 1);
+        }
+
+        // Second loop to mark GREEN values
         for(int i=0;i<WORD_LENGTH;i++){
             if(guessWord.charAt(i) == chosenWord.charAt(i)){
                 result.put(i,Status.GREEN);
-                lettersCount.put(chosenWord.charAt(i), lettersCount.getOrDefault(chosenWord.charAt(i),0)+1);
+                lettersCount.put(guessWord.charAt(i), lettersCount.get(guessWord.charAt(i)) - 1);
             }
         }
 
-        // Second loop to mark Yellow values
-        // TODO Improve the logic to make it a single loop
-        for(int i=0;i<WORD_LENGTH;i++){
-            if(lettersCount.getOrDefault(guessWord.charAt(i),0)==0){
-                for(int j=0;j<WORD_LENGTH;j++){
-                    if(chosenWord.charAt(i) == guessWord.charAt(j)){
-                        result.put(j,Status.YELLOW);
-                    }
-                }
+        // Third loop to mark Yellow  and Black values
+        for (int i = 0; i < guessWord.length(); i++) {
+            if (result.containsKey(i)) continue; // already marked green
+
+            char guessChar = guessWord.charAt(i);
+            if (lettersCount.getOrDefault(guessChar, 0) > 0) {
+                result.put(i, Status.YELLOW);
+                lettersCount.put(guessChar, lettersCount.get(guessChar) - 1); // consume it
+            } else {
+                result.put(i, Status.BLACK);
             }
         }
 

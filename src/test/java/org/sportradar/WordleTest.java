@@ -14,6 +14,8 @@ class WordleTest {
     void testCheckIfGuessedWordMatchesRepeatingChar() {
         Map<Integer,Status> map = checkIfGuessedWordMatches("WATER","OTTER");
         Map<Integer,Status> expectedResults = new HashMap<Integer,Status>();
+        expectedResults.put(0,Status.BLACK);
+        expectedResults.put(1,Status.BLACK);
         expectedResults.put(2,Status.GREEN);
         expectedResults.put(3,Status.GREEN);
         expectedResults.put(4,Status.GREEN);
@@ -23,6 +25,8 @@ class WordleTest {
     void testCheckIfGuessedWordMatchesRepeatingCharThrice() {
         Map<Integer,Status> map = checkIfGuessedWordMatches("WATET","TOTET");
         Map<Integer,Status> expectedResults = new HashMap<Integer,Status>();
+        expectedResults.put(0,Status.BLACK);
+        expectedResults.put(1,Status.BLACK);
         expectedResults.put(2,Status.GREEN);
         expectedResults.put(3,Status.GREEN);
         expectedResults.put(4,Status.GREEN);
@@ -33,6 +37,8 @@ class WordleTest {
     void testCheckIfGuessedWordMatches() {
         Map<Integer,Status> map = checkIfGuessedWordMatches("WATER","PUTAR");
         Map<Integer,Status> expectedResults = new HashMap<Integer,Status>();
+        expectedResults.put(0,Status.BLACK);
+        expectedResults.put(1,Status.BLACK);
         expectedResults.put(2,Status.GREEN);
         expectedResults.put(3,Status.YELLOW);
         expectedResults.put(4,Status.GREEN);
@@ -59,6 +65,18 @@ class WordleTest {
         expectedResults.put(2,Status.YELLOW);
         expectedResults.put(3,Status.YELLOW);
         expectedResults.put(4,Status.YELLOW);
+        assertEquals(map,expectedResults);
+    }
+
+    @Test
+    void testCheckIfGuessedWordMatchesBlackOnlyCheck() {
+        Map<Integer,Status> map = checkIfGuessedWordMatches("HOUND","EAGLE");
+        Map<Integer,Status> expectedResults = new HashMap<Integer,Status>();
+        expectedResults.put(0,Status.BLACK);
+        expectedResults.put(1,Status.BLACK);
+        expectedResults.put(2,Status.BLACK);
+        expectedResults.put(3,Status.BLACK);
+        expectedResults.put(4,Status.BLACK);
         assertEquals(map,expectedResults);
     }
 }
